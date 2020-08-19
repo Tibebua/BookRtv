@@ -36,6 +36,7 @@ namespace BookRtv.Data.Repository
             return await _context.Books
                 .Include(b => b.Author)
                 .Include(b => b.Category)
+                .OrderBy(b => b.BookName)
                 .ToListAsync();
         }
 

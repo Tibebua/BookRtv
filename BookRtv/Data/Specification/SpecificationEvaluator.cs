@@ -13,13 +13,29 @@ namespace BookRtv.Data.Specification
         {
             //TEntity eg. book... thus IQueryable<Book> 
             // Criteria -> eg. Where(book.AuthorId == id)
-            // Specification evaluator just adds the "where" and "Include" SQLqueries to 
+            // Specification evaluator just adds the "where", "Include", "OrderBy",etc SQLqueries to 
             // the input query(_context.Books).. i.e. _context.Books.Where(b => b.Id ==id).Include(b => b.Author)
-            var query = inputQuery;
+         //eg. _context.Books
+         //       .Include(b => b.Author)
+         //       .Include(b => b.Category)
+         //       .OrderBy(b => b.BookName)
+         //       .ToListAsync();
+
+          var query = inputQuery;
 
             if(spec.Criteria != null)
             {
                 query = query.Where(spec.Criteria);
+            }
+
+            if(spec.OrderByExp != null)
+            {
+                query = query.OrderBy(spec.OrderByExp);
+            }
+
+            if(spec.OrderByDescendingExp != null)
+            {
+                query = query.OrderByDescending(spec.OrderByDescendingExp);
             }
 
             query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));

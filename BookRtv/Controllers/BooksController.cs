@@ -36,9 +36,13 @@ namespace BookRtv.Controllers
 
         // Get all books
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<BookToReturnDto>>> GetBooksAsync()
+        public async Task<ActionResult<IReadOnlyList<BookToReturnDto>>> GetBooksAsync(
+            [FromQuery] string sort, int? authorId, int? catId )
         {
-            var spec = new BooksWithAuthorsAndCatsSpecification();
+            //lesson in here: if you use searchparam or bookParams, u've to use them all... 
+            //else, using others directly and search as an object will not work
+            //also, if u use bookParams, u have to declare [fromQuery]
+            var spec = new BooksWithAuthorsAndCatsSpecification(sort, authorId, catId );
 
             var books = await _bookRepo.GetAllWithSpecification(spec);
 
