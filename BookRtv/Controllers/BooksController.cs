@@ -22,7 +22,7 @@ namespace BookRtv.Controllers
         private readonly IGenericRepository<Author> _authorRepo;
         private readonly IGenericRepository<Category> _catRepo;
         private readonly IMapper _mapper;
-        //not using unit of work
+        //not using unit of work pattern
 
         public BooksController(IGenericRepository<Book> bookRepo, 
             IGenericRepository<Author> authorRepo, IGenericRepository<Category> catRepo,
